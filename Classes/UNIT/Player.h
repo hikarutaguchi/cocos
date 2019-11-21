@@ -14,7 +14,7 @@ public:
 
 	key getnowkey();			// Œ»İ‚Ì“ü—Í‚µ‚½·°‚ğ•Ô‚·
 	INPUT_TIMING getTiming();	// ¡‚Ì“ü—Íó‘Ô‚ğ•Ô‚·
-	void SetAct(ACT_ID id);
+	void SetAct();
 	ACT_ID GetAct();
 	
 

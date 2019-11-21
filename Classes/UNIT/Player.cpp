@@ -1,6 +1,7 @@
 #include "cocos2d.h"
 #include "Player.h"
 #include "IMAGE/ImageMng.h"
+#include <INPUT/InputKey.h>
 #include <ACT/moveLR.h>
 
 USING_NS_CC;
@@ -81,6 +82,7 @@ bool Player::init()
 	//読み込んだキャッシュから画像を取り出し、Spriteクラスとして利用する。
 	this->Sprite::createWithSpriteFrameName("player-idle-1.png");
 
+	//inputstate = new InputKey(this);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	inputstate = new InputKey(this);
 #else
@@ -91,7 +93,7 @@ bool Player::init()
 	lpImageMng.setAnim(0.08f, true, runrun, "run");
 	lpImageMng.setAnim(0.12f, true, jump, "jump");
 
-	this->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	this->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y + 100));
 
 	_actP->init();
 
@@ -105,7 +107,7 @@ bool Player::init()
 		//左移動
 		ActModule data;
 		data.black.emplace_back(ACT_ID::JUMP);
-		data.black.emplace_back(ACT_ID::IDLE);
+		//data.black.emplace_back(ACT_ID::FALLING);
 		data.move = { -3,0 };
 		data.ActName = "run";
 		data.timing = INPUT_TIMING::ON;
@@ -119,7 +121,7 @@ bool Player::init()
 		//右移動
 		ActModule data;
 		data.black.emplace_back(ACT_ID::JUMP);
-		data.black.emplace_back(ACT_ID::IDLE);
+		//data.black.emplace_back(ACT_ID::FALLING);
 		data.ActName = "run";
 		data.move = { 3,0 };
 		data.timing = INPUT_TIMING::ON;
@@ -183,6 +185,7 @@ void Player::update(float delta)
 {
 	inputstate->updata();
 	_actP->Updata();
+	SetAct();
 }
 
 key Player::getnowkey()
@@ -195,9 +198,9 @@ INPUT_TIMING Player::getTiming()
 	return inputstate->retTiming();
 }
 
-void Player::SetAct(ACT_ID id)
+void Player::SetAct()
 {
-	_actid = id;
+	_actid = _actP->GetID();
 }
 
 ACT_ID Player::GetAct()

@@ -3,6 +3,7 @@
 bool CheckList::operator()(cocos2d::Sprite & sp, ActModule & module)
 {
 	auto test = ((Player&)sp).GetAct();
+	TRACE("現在のアニメーション = %d\n", test);
 	for (auto data : module.black)
 	{
 		if (test == data)
@@ -23,7 +24,7 @@ bool CheckList::operator()(cocos2d::Sprite & sp, ActModule & module)
 		}
 	}
 
-	if (module.white.size() < 1)
+	if (module.black.size() < 1)
 	{
 		return true;
 	}

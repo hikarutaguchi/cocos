@@ -1,7 +1,7 @@
 #include <INPUT/InputKey.h>
 USING_NS_CC;
 
-InputKey::InputKey(cocos2d::Node * sp)
+InputKey::InputKey(cocos2d::Sprite * sp)
 {
 	auto listener = cocos2d::EventListenerKeyboard::create();
 	listener->onKeyPressed = [this](cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)->bool

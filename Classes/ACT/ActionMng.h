@@ -44,7 +44,7 @@ class ActionMng
 	 void init();											// ‰Šú‰»Œn
 	 bool AddActionM(std::string actname, ActModule & act);	// ±¸¼®İ‚Ì’Ç‰Á
 	 void SetAct(ACT_ID id, bool flag = false);
-	 //ACT_ID SetID() { return nowAct; };
+	 ACT_ID GetID() { return nowAct; };
  private:
 	 void AnimUpdata();										// ±ÆÒ°¼®İ‚ÌXV
 	 std::map<std::string, ActModule> _module;				// ÃŞ°À“o˜^—p

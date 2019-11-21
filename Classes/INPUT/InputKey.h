@@ -5,7 +5,7 @@
 struct InputKey : public _state
 {
 public:
-	InputKey(cocos2d::Node * sp);
+	InputKey(cocos2d::Sprite * sp);
 	~InputKey();
 	void Update(cocos2d::Node *sp);
 	INPUT_TYPE getType() { return INPUT_TYPE::KEY; };	// “ü—ÍÀ²Ìß

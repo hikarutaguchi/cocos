@@ -31,18 +31,18 @@ void ActionMng::Updata()
 	{
 		if (checkLam(data))
 		{
-			SetAct(_module[data.first].actID);
+			//SetAct(_module[data.first].actID);
 			_module[data.first].RunAction(_sprite, data.second);
 			chF = true;
-			//nowAct = data.second.actID;
-			TRACE("現在のアニメーション = %d\n", nowAct);
+			nowAct = data.second.actID;
+			//TRACE("現在のアニメーション = %d\n", nowAct);
 		}
 	}
 
 	if (chF == false)
 	{
 		nowAct = ACT_ID::IDLE;
-		TRACE("現在のアニメーション = %d\n", nowAct);
+		//TRACE("現在のアニメーション = %d\n", nowAct);
 	}
 	AnimUpdata();
 }
@@ -88,6 +88,7 @@ bool ActionMng::AddActionM(std::string actname, ActModule & act)
 	{
 		_module.try_emplace(actname, std::move(act));
 		//_module[actname].ActList.emplace_back(CheckHitKey());
+		_module[actname].ActList.emplace_back(CheckList());
 		_module[actname].ActList.emplace_back(CheckHitObj());
 		_module[actname].RunAction = falling();
 	}
@@ -97,7 +98,7 @@ bool ActionMng::AddActionM(std::string actname, ActModule & act)
 
 void ActionMng::SetAct(ACT_ID id, bool flag)
 {
-	((Player&)_sprite).SetAct(id);
+	//((Player&)_sprite).SetAct(id);
 }
 
 void ActionMng::AnimUpdata()
