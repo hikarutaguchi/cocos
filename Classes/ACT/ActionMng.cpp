@@ -65,17 +65,16 @@ bool ActionMng::AddActionM(std::string actname, ActModule & act)
 		_module[actname].ActList.emplace_back(CheckHitKey());
 		_module[actname].ActList.emplace_back(CheckHitObj());
 		//_module[actname].ActList.emplace_back(CheckList());
-		_module[actname].RunAction = jumping();
+		_module[actname].RunAction = jump();
 	}
 
-	//if (actname == "’âŽ~")
-	//{
-	//	_module.try_emplace(actname, std::move(act));
-	//	//_module[actname].ActList.emplace_back(CheckHitKey());
-	//	//_module[actname].ActList.emplace_back(CheckHitObj());
-	//	//_module[actname].ActList.emplace_back(CheckList());
-	//	_module[actname].RunAction = idle();
-	//}
+	if (actname == "ƒWƒƒƒ“ƒv’†")
+	{
+		_module.try_emplace(actname, std::move(act));
+		_module[actname].ActList.emplace_back(CheckList());
+		_module[actname].ActList.emplace_back(CheckHitObj());
+		_module[actname].RunAction = jumping();
+	}
 
 	/*if (actname == "—Ž‰º")
 	{
@@ -91,6 +90,15 @@ bool ActionMng::AddActionM(std::string actname, ActModule & act)
 		_module[actname].ActList.emplace_back(CheckList());
 		_module[actname].ActList.emplace_back(CheckHitObj());
 		_module[actname].RunAction = falling();
+	}
+
+	if (actname == "’âŽ~")
+	{
+		_module.try_emplace(actname, std::move(act));
+		//_module[actname].ActList.emplace_back(CheckHitKey());
+		//_module[actname].ActList.emplace_back(CheckHitObj());
+		_module[actname].ActList.emplace_back(CheckList());
+		//_module[actname].RunAction = idle();
 	}
 
 	return true;
@@ -137,6 +145,7 @@ void ActionMng::init()
 {
 	_animcache = lpImageMng.getAnim();
 	_animation = _animcache->getAnimation("idle");
+	nowAct = ACT_ID::IDLE;
 }
 
 /*int count = 0;

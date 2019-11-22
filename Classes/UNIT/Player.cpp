@@ -97,6 +97,8 @@ bool Player::init()
 
 	_actP->init();
 
+	_actid = ACT_ID::IDLE;
+
 	animcache = lpImageMng.getAnim();
 
 	auto repeat = RepeatForever::create(Animate::create(animcache->getAnimation("idle")));
@@ -106,7 +108,7 @@ bool Player::init()
 	{
 		//¶ˆÚ“®
 		ActModule data;
-		data.black.emplace_back(ACT_ID::JUMP);
+		data.black.emplace_back(ACT_ID::JUMPING);
 		//data.black.emplace_back(ACT_ID::FALLING);
 		data.move = { -3,0 };
 		data.ActName = "run";
@@ -139,19 +141,26 @@ bool Player::init()
 		data.ActName = "jump";
 		data.move = { 0,25 };
 		data.actID = ACT_ID::JUMP;
-		data.colPos = { Vec2(20,40),Vec2(-20,40) };
+		
 		data.Key = cocos2d::EventKeyboard::KeyCode::KEY_SPACE;
 		_actP->AddActionM("ƒWƒƒƒ“ƒv", data);
 	}
 
 	{
-		//’âŽ~
+		//ƒWƒƒƒ“ƒv’†
 		ActModule data;
-		data.actID = ACT_ID::IDLE;
-		data.ActName = "idle";
-		data.timing = INPUT_TIMING::OFF;
-		data.Key = cocos2d::EventKeyboard::KeyCode::KEY_NONE;
-		_actP->AddActionM("’âŽ~", data);
+		data.black.emplace_back(ACT_ID::FALLING);
+		data.black.emplace_back(ACT_ID::FALL);
+		data.black.emplace_back(ACT_ID::RUN);
+		data.black.emplace_back(ACT_ID::IDLE);
+		data.white.emplace_back(ACT_ID::JUMP);
+		data.actID = ACT_ID::JUMPING;
+		data.ActName = "jump";
+		data.colPos = { Vec2(20,40),Vec2(-20,40) };
+		data.move = { 0,3 };
+
+		_actP->AddActionM("ƒWƒƒƒ“ƒv’†", data);
+		
 	}
 
 	{
@@ -168,12 +177,27 @@ bool Player::init()
 		//—Ž‰º’†
 		ActModule data;
 		data.actID = ACT_ID::FALLING;
-		data.black.emplace_back(ACT_ID::RUN);
+		data.black.emplace_back(ACT_ID::JUMPING);
 		data.ActName = "idle";
 		data.move = { 0,-1 };
 		data.colPos = { Vec2(0,-65),Vec2(0,-65) };
-		data.Key = cocos2d::EventKeyboard::KeyCode::KEY_NONE;
 		_actP->AddActionM("—Ž‰º’†", data);
+	}
+
+	{
+		//’âŽ~
+		ActModule data;
+		data.actID = ACT_ID::IDLE;
+		data.black.emplace_back(ACT_ID::RUN);
+		data.black.emplace_back(ACT_ID::FALL);
+		data.black.emplace_back(ACT_ID::FALLING);
+		data.black.emplace_back(ACT_ID::JUMP);
+		data.black.emplace_back(ACT_ID::JUMPING);
+		data.black.emplace_back(ACT_ID::IDLE);
+		data.ActName = "idle";
+		data.timing = INPUT_TIMING::OFF;
+		data.Key = cocos2d::EventKeyboard::KeyCode::KEY_NONE;
+		_actP->AddActionM("’âŽ~", data);
 	}
 
 	this->scheduleUpdate();
@@ -185,7 +209,7 @@ void Player::update(float delta)
 {
 	inputstate->updata();
 	_actP->Updata();
-	SetAct();
+	//SetAct();
 }
 
 key Player::getnowkey()
@@ -205,7 +229,7 @@ void Player::SetAct()
 
 ACT_ID Player::GetAct()
 {
-	return _actid;
+	return _actP->GetID();
 }
 
 /*std::string name;
