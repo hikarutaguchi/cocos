@@ -7,6 +7,7 @@
 #include <ACT/CheckList.h>
 #include <ACT/Fall.h>
 #include <UNIT/Player.h>
+#include <Effekseer/Effekseer.h>
 
 ActionMng::ActionMng(cocos2d::Sprite &sp) : _sprite(sp)
 {
@@ -147,17 +148,3 @@ void ActionMng::init()
 	_animation = _animcache->getAnimation("idle");
 	nowAct = ACT_ID::IDLE;
 }
-
-/*int count = 0;
-for (auto check : data.second.ActList)
-{
-if (check(_sprite, data.second))
-{
-count++;
-}
-}*/
-/*if (data.second.ActList.size() == count)
-{
-	_module[data.first].RunAction(_sprite, data.second);
-}*/
-//count = 0;

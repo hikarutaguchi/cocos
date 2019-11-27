@@ -32,6 +32,14 @@
 #include "IMAGE/ImageMng.h"
 #include "UNIT/Obj.h"
 #include "UNIT/Player.h"
+#include "Effekseer/Effekseer.h"
+#include <ck/ck.h>
+#include <ck/bank.h>
+#include <ck/sound.h>
+#include <ck/effect.h>
+#include <ck/effectparam.h>
+#include <ck/effectbus.h>
+
 
 class GameScene : public cocos2d::Scene
 {
@@ -44,15 +52,28 @@ public:
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
+
+	//efk::EffectManager*		manager = nullptr;
+
+	//int count = 0;
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameScene);
 private:
 
+	CkBank* _bank = nullptr;
+	CkSound* _soundEffect = nullptr;
+	CkSound* _music = nullptr;
+
+	std::unique_ptr<efk::EffectManager> manager = nullptr;
+
 	//cocos2d::Sprite *face;
 	cocos2d::Vec2 move;
 	_state *inputstate;
 	ImageMng *imagemng;
+
+	virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
+
 };
 
 #endif // __HELLOWORLD_SCENE_H__

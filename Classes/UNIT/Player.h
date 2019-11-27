@@ -1,5 +1,6 @@
 #pragma once
 #include "UNIT/Obj.h"
+#include <Effekseer/Effekseer.h>
 
 using key = cocos2d::EventKeyboard::KeyCode;
 
@@ -24,5 +25,6 @@ private:
 	ActionMng * _actP;			// ±¸¼®İ“o˜^¸×½‚ÌÎß²İÀ
 	INPUT_TIMING _timing;		// Œ»İ‚Ì“ü—ÍÀ²Ğİ¸Ş
 	ACT_ID _actid;
+	efk::EffectManager* _mng = nullptr;
 };
 
