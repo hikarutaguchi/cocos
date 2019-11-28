@@ -1,0 +1,45 @@
+list(APPEND GAME_SOURCE
+     Classes/AppDelegate.cpp
+        Classes/GameScene.cpp
+        Classes/_DebugConOut.cpp
+        Classes/UNIT/Obj.cpp
+        Classes/UNIT/Player.cpp
+        Classes/INPUT/InputKey.cpp
+        Classes/INPUT/InputPad.cpp
+        Classes/IMAGE/ImageMng.cpp
+        Classes/Effekseer/Effekseer.cpp
+        Classes/Effekseer/EffekseerNative.cpp
+        Classes/Effekseer/EffekseerRendererNative.cpp
+        Classes/ACT/ActionMng.cpp
+        Classes/ACT/CheckHitKey.cpp
+        Classes/ACT/CheckHitObj.cpp
+        Classes/ACT/CheckList.cpp
+        Classes/ACT/Fall.cpp
+        Classes/ACT/jump.cpp
+        Classes/ACT/moveLR.cpp
+     )
+list(APPEND GAME_HEADER
+     Classes/AppDelegate.h
+        Classes/GameScene.h
+        Classes/_DebugConOut.h
+        Classes/UNIT/Obj.h
+        Classes/UNIT/Player.h
+        Classes/INPUT/_state.h
+        Classes/INPUT/InputKey.h
+        Classes/INPUT/InputPad.h
+        Classes/IMAGE/ImageMng.h
+        Classes/Effekseer/Effekseer.h
+        Classes/Effekseer/EffekseerNative.h
+        Classes/Effekseer/EffekseerRendererNative.h
+        Classes/ACT/ActionMng.h
+        Classes/ACT/CheckHitKey.h
+        Classes/ACT/CheckHitObj.h
+        Classes/ACT/CheckList.h
+        Classes/ACT/Fall.h
+        Classes/ACT/jump.h
+        Classes/ACT/moveLR.h
+     )
+
+  abiFilters "armeabi-v7a", "x86"
+
+MAPのフォルダの位置が悪かった。ので作り直ししたらできた。
