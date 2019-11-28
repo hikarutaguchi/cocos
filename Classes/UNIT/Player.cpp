@@ -158,20 +158,20 @@ bool Player::init()
 		data.ActName = "jump";
 		data.colPos = { Vec2(20,40),Vec2(-20,40) };
 		data.move = { 0,3 };
-
+		//data.Key = cocos2d::EventKeyboard::KeyCode::KEY_NONE;
 		_actP->AddActionM("ƒWƒƒƒ“ƒv’†", data);
 		
 	}
 
-	{
-		//—Ž‰º
-		ActModule data;
-		data.actID = ACT_ID::FALL;
-		data.ActName = "idle";
-		//data.move = { 0,-1 };
-		data.colPos = { Vec2(0,-65),Vec2(0,-65) };
-		_actP->AddActionM("—Ž‰º", data);
-	}
+	//{
+	//	//—Ž‰º
+	//	ActModule data;
+	//	data.actID = ACT_ID::FALL;
+	//	data.ActName = "idle";
+	//	//data.move = { 0,-1 };
+	//	data.colPos = { Vec2(0,-65),Vec2(0,-65) };
+	//	_actP->AddActionM("—Ž‰º", data);
+	//}
 
 	{
 		//—Ž‰º’†
@@ -195,11 +195,12 @@ bool Player::init()
 		data.black.emplace_back(ACT_ID::JUMPING);
 		data.black.emplace_back(ACT_ID::IDLE);
 		data.ActName = "idle";
-		data.timing = INPUT_TIMING::OFF;
+		//data.timing = INPUT_TIMING::OFF;
 		data.Key = cocos2d::EventKeyboard::KeyCode::KEY_NONE;
 		_actP->AddActionM("’âŽ~", data);
 	}
 
+	manager.reset(efk::EffectManager::create(Director::getInstance()->getOpenGLView()->getDesignResolutionSize()));
 	this->scheduleUpdate();
 
 	return true;
@@ -209,6 +210,21 @@ void Player::update(float delta)
 {
 	inputstate->updata();
 	_actP->Updata();
+	(*manager).update();
+
+	if (getnowkey() == key::KEY_Z)
+	{
+
+		effect = efk::Effect::create("Laser01.efk", 13.0f);
+		emitter = efk::EffectEmitter::create(manager.get());
+		emitter->setEffect(effect);
+
+		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+		emitter->setPosition(Vec2(120, 100));
+		this->addChild(emitter, 10);
+
+		emitter->play();
+	}
 	//SetAct();
 }
 

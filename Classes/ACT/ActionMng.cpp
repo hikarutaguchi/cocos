@@ -16,7 +16,7 @@ ActionMng::ActionMng(cocos2d::Sprite &sp) : _sprite(sp)
 
 void ActionMng::Updata()
 {
-	auto checkLam = [&](auto data) {
+	auto checkLam = [&](std::pair<std::string, ActModule> data) {
 		for (auto check : data.second.ActList)
 		{
 			if (!check(_sprite, data.second))
@@ -53,28 +53,25 @@ bool ActionMng::AddActionM(std::string actname, ActModule & act)
 {
 	if (actname == "右移動" || actname == "左移動")
 	{
-		_module.try_emplace(actname, std::move(act));
-		_module[actname].ActList.emplace_back(CheckList());
-		_module[actname].ActList.emplace_back(CheckHitKey());
-		_module[actname].ActList.emplace_back(CheckHitObj());
-		_module[actname].RunAction = moveLR();
+		act.ActList.emplace_back(CheckList());
+		act.ActList.emplace_back(CheckHitKey());
+		act.ActList.emplace_back(CheckHitObj());
+		act.RunAction = moveLR();
 	}
 
 	if (actname == "ジャンプ")
 	{
-		_module.try_emplace(actname, std::move(act));
-		_module[actname].ActList.emplace_back(CheckHitKey());
-		_module[actname].ActList.emplace_back(CheckHitObj());
+		act.ActList.emplace_back(CheckHitKey());
+		act.ActList.emplace_back(CheckHitObj());
 		//_module[actname].ActList.emplace_back(CheckList());
-		_module[actname].RunAction = jump();
+		act.RunAction = jump();
 	}
 
 	if (actname == "ジャンプ中")
 	{
-		_module.try_emplace(actname, std::move(act));
-		_module[actname].ActList.emplace_back(CheckList());
-		_module[actname].ActList.emplace_back(CheckHitObj());
-		_module[actname].RunAction = jumping();
+		act.ActList.emplace_back(CheckList());
+		act.ActList.emplace_back(CheckHitObj());
+		act.RunAction = jumping();
 	}
 
 	/*if (actname == "落下")
@@ -86,20 +83,23 @@ bool ActionMng::AddActionM(std::string actname, ActModule & act)
 
 	if (actname == "落下中")
 	{
-		_module.try_emplace(actname, std::move(act));
 		//_module[actname].ActList.emplace_back(CheckHitKey());
-		_module[actname].ActList.emplace_back(CheckList());
-		_module[actname].ActList.emplace_back(CheckHitObj());
-		_module[actname].RunAction = falling();
+		act.ActList.emplace_back(CheckList());
+		act.ActList.emplace_back(CheckHitObj());
+		act.RunAction = falling();
 	}
 
 	if (actname == "停止")
 	{
-		_module.try_emplace(actname, std::move(act));
 		//_module[actname].ActList.emplace_back(CheckHitKey());
 		//_module[actname].ActList.emplace_back(CheckHitObj());
-		_module[actname].ActList.emplace_back(CheckList());
+		act.ActList.emplace_back(CheckList());
 		//_module[actname].RunAction = idle();
+	}
+
+	if (_module.find(actname) == _module.end())
+	{
+		_module.emplace(actname,std::move(act));
 	}
 
 	return true;
@@ -136,6 +136,12 @@ void ActionMng::AnimUpdata()
 				_animation = _animcache->getAnimation(data.second.ActName);
 			}
 		}
+	}
+
+	if (((Player&)_sprite).GetAct() == ACT_ID::JUMPING)
+	{
+		((Obj&)_sprite).stopAllActions();
+		_animation = _animcache->getAnimation("jump");
 	}
 	
 	((Player&)_sprite).runAction(RepeatForever::create(Animate::create(_animation)));
