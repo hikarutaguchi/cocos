@@ -67,9 +67,9 @@ public:
 
 		nowkey = keymapstate[KEY_STATE::INPUT];
 	};
-	virtual INPUT_TYPE getType() = 0;				// “ü—ÍÀ²Ìßæ“¾
-	virtual DIR GetDirData() = 0;					// Œ»İŒü‚¢‚Ä‚¢‚é•ûŒü‚ğæ“¾
-	virtual cocos2d::Vec2 GetMove() = 0;			// ˆÚ“®—Ê‚ğæ“¾
+	//virtual INPUT_TYPE getType() = 0;				// “ü—ÍÀ²Ìßæ“¾
+	//virtual DIR GetDirData() = 0;					// Œ»İŒü‚¢‚Ä‚¢‚é•ûŒü‚ğæ“¾
+	//virtual cocos2d::Vec2 GetMove() = 0;			// ˆÚ“®—Ê‚ğæ“¾
 	INPUT_TIMING retTiming() { return timing; };	// “ü—ÍÀ²Ğİ¸Ş
 	key retnowkey() { return nowkey; };				// Œ»İ‰Ÿ‚µ‚Ä‚¢‚é·°
 protected:

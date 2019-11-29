@@ -102,7 +102,7 @@ bool GameScene::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-	TMXTiledMap *map = TMXTiledMap::create("image/mapdate/untitled.tmx");
+	TMXTiledMap *map = TMXTiledMap::create("unti.tmx");
 
 	//auto rsize = Director::getInstance()->getOpenGLView()->getDesignResolutionSize();
 
@@ -110,7 +110,7 @@ bool GameScene::init()
 
 	manager.reset(efk::EffectManager::create(Director::getInstance()->getOpenGLView()->getDesignResolutionSize()));
 
-	auto effect = efk::Effect::create("Laser01.efk", 13.0f);
+	auto effect = efk::Effect::create("Laser01.efk");
 	auto emitter = efk::EffectEmitter::create(manager.get());
 	emitter->setEffect(effect);
 	emitter->setPlayOnEnter(true);
@@ -159,7 +159,7 @@ bool GameScene::init()
 	
 	bgLayer->addChild(map,1);
 
-	//ChLayer->addChild(emitter, 10);
+	ChLayer->addChild(emitter, 10);
 
 	auto player = Player::createSprite();
 	player->setName("player");
@@ -172,11 +172,11 @@ bool GameScene::init()
 	CkConfig config;
 #endif
 	CkInit(&config);
-//	//Bank sounds ファイルの再生
-//	//CkBank* bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
-//	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+	//Bank sounds ファイルの再生
+	//CkBank* bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
 //	
-//	//_soundEffect = CkSound::newBankSound(_bank,1);
+	_soundEffect = CkSound::newBankSound(_bank,1);
 //	_soundEffect = CkSound::newBankSound(_bank, "hiphoppiano");    // 別関数にてckbxで設定したindex番号でも呼び出し可能
 //	_soundEffect->play();
 

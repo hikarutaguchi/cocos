@@ -8,11 +8,10 @@ void InputPad::Update(cocos2d::Node * sp)
 	listener->onTouchEnded = CC_CALLBACK_2(InputPad::onTouchEnded, this);
 	listener->onTouchMoved = CC_CALLBACK_2(InputPad::onTouchMoved, this);
 
-
 	auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
 	dispatcher->addEventListenerWithSceneGraphPriority(listener, sp);
 
-	sp->setPosition(sp->getPositionX() + move.x, sp->getPositionY() + move.y);
+	//sp->setPosition(sp->getPositionX() + move.x, sp->getPositionY() + move.y);
 
 }
 
@@ -31,18 +30,22 @@ void InputPad::onTouchMoved(cocos2d::Touch * touch, cocos2d::Event * event)
 
 	move.x = cos(angle) * 2;
 	move.y = sin(angle) * 2;
-	/*if (move.x > 0)
+	if (move.x > 0)
 	{
-		data = DIR::RIGHT;
+		nowkey = key::KEY_RIGHT_ARROW;
+		timing = INPUT_TIMING::ON;
 	}
 	else if(move.x < 0)
 	{
-		data = DIR::LEFT;
-	}*/
+		nowkey = key::KEY_LEFT_ARROW;
+		timing = INPUT_TIMING::ON;
+	}
 }
 
 void InputPad::onTouchEnded(cocos2d::Touch * touch, cocos2d::Event * event)
 {
+	nowkey = key::KEY_NONE;
+	timing = INPUT_TIMING::OFF;
 	move = { 0,0 };
 	//data = DIR::STOP;
 }

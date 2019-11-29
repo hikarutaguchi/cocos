@@ -25,7 +25,6 @@ private:
 	ActionMng * _actP;			// ±¸¼®İ“o˜^¸×½‚ÌÎß²İÀ
 	INPUT_TIMING _timing;		// Œ»İ‚Ì“ü—ÍÀ²Ğİ¸Ş
 	ACT_ID _actid;
-	efk::EffectManager* _mng = nullptr;
 	efk::EffectEmitter* emitter;
 	efk::Effect* effect;
 	std::unique_ptr<efk::EffectManager> manager = nullptr;

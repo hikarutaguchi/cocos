@@ -85,6 +85,7 @@ bool Player::init()
 	//inputstate = new InputKey(this);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 	inputstate = new InputKey(this);
+	//inputstate = new InputPad();
 #else
 	inputstate = new InputPad();
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_
@@ -209,6 +210,7 @@ bool Player::init()
 void Player::update(float delta)
 {
 	inputstate->updata();
+	inputstate->Update(this);
 	_actP->Updata();
 	(*manager).update();
 

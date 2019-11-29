@@ -37,7 +37,7 @@
 #include <ck/bank.h>
 #include <ck/sound.h>
 #include <ck/effect.h>
-//#include <ck/config.h>
+#include <ck/config.h>
 //#include <ck/effectparam.h>
 //#include <ck/effectbus.h>
 

@@ -45,6 +45,7 @@ void ActionMng::Updata()
 		nowAct = ACT_ID::IDLE;
 		//TRACE("現在のアニメーション = %d\n", nowAct);
 	}
+	//TRACE("現在のｷｰ = %d\n", ((Player&)_sprite).getnowkey());
 	AnimUpdata();
 }
 
