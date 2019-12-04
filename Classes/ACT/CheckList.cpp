@@ -3,17 +3,13 @@
 bool CheckList::operator()(cocos2d::Sprite & sp, ActModule & module)
 {
 	auto test = ((Player&)sp).GetAct();
-	//TRACE("現在のアニメーション = %d\n", test);
+	TRACE("現在のアニメーション = %d\n", test);
 	for (auto data : module.black)
 	{
 		if (test == data)
 		{
 			return false;
 		}
-		/*if (data == module.actID)
-		{
-			return false;
-		}*/
 	}
 
 	for (auto data : module.white)

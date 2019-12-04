@@ -33,11 +33,11 @@
 #include "UNIT/Obj.h"
 #include "UNIT/Player.h"
 #include "Effekseer/Effekseer.h"
-#include <ck/ck.h>
-#include <ck/bank.h>
-#include <ck/sound.h>
-#include <ck/effect.h>
-#include <ck/config.h>
+//#include <ck/ck.h>
+//#include <ck/bank.h>
+//#include <ck/sound.h>
+//#include <ck/effect.h>
+//#include <ck/config.h>
 //#include <ck/effectparam.h>
 //#include <ck/effectbus.h>
 
@@ -62,9 +62,9 @@ public:
     CREATE_FUNC(GameScene);
 private:
 
-	CkBank* _bank = nullptr;
+	/*CkBank* _bank = nullptr;
 	CkSound* _soundEffect = nullptr;
-	CkSound* _music = nullptr;
+	CkSound* _music = nullptr;*/
 
 	std::unique_ptr<efk::EffectManager> manager = nullptr;
 

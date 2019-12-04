@@ -1,6 +1,6 @@
 #pragma once
 #include "UNIT/Obj.h"
-#include <Effekseer/Effekseer.h>
+#include <EFFECT/EffectMng.h>
 
 using key = cocos2d::EventKeyboard::KeyCode;
 
@@ -17,6 +17,7 @@ public:
 	INPUT_TIMING getTiming();	// ¡‚Ì“ü—Íó‘Ô‚ğ•Ô‚·
 	void SetAct();
 	ACT_ID GetAct();
+	bool getjumpf() { return inputstate->GetJmpF(); };
 	
 
 private:
@@ -25,9 +26,9 @@ private:
 	ActionMng * _actP;			// ±¸¼®İ“o˜^¸×½‚ÌÎß²İÀ
 	INPUT_TIMING _timing;		// Œ»İ‚Ì“ü—ÍÀ²Ğİ¸Ş
 	ACT_ID _actid;
-	efk::EffectEmitter* emitter;
+	/*efk::EffectEmitter* emitter;
 	efk::Effect* effect;
-	std::unique_ptr<efk::EffectManager> manager = nullptr;
+	std::unique_ptr<efk::EffectManager> manager = nullptr;*/
 	bool test = false;
 };
 

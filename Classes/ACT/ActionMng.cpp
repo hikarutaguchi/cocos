@@ -40,12 +40,24 @@ void ActionMng::Updata()
 		}
 	}
 
+	if (((Player&)_sprite).getjumpf())
+	{
+		nowAct = ACT_ID::JUMPING;
+	}
+	if (nowAct == ACT_ID::JUMPING)
+	{
+		if (!((Player&)_sprite).getjumpf())
+		{
+			nowAct = ACT_ID::IDLE;
+		}
+	}
+
 	if (chF == false)
 	{
 		nowAct = ACT_ID::IDLE;
 		//TRACE("現在のアニメーション = %d\n", nowAct);
 	}
-	//TRACE("現在のｷｰ = %d\n", ((Player&)_sprite).getnowkey());
+	//TRACE("現在のﾀｲﾐﾝｸﾞ = %d\n", ((Player&)_sprite).getTiming());
 	AnimUpdata();
 }
 
@@ -115,36 +127,47 @@ void ActionMng::AnimUpdata()
 {
 	for (auto data : _module)
 	{
-		if (((Player&)_sprite).getnowkey() == data.second.Key)
+		if (((Player&)_sprite).GetAct() != ACT_ID::JUMPING)
 		{
-			if (_animation == _animcache->getAnimation(data.second.ActName))
+			if (((Player&)_sprite).getnowkey() == data.second.Key)
 			{
-				return;
-			}
-			else
-			{
-				((Obj&)_sprite).stopAllActions();
-				if (((Player&)_sprite).getnowkey() == key::KEY_LEFT_ARROW)
+				if (_animation == _animcache->getAnimation(data.second.ActName))
 				{
-					auto flip = FlipX::create(true);
-					((Player&)_sprite).runAction(flip);
+					return;
 				}
-				if (((Player&)_sprite).getnowkey() == key::KEY_RIGHT_ARROW)
+				else
 				{
-					auto flip = FlipX::create(false);
-					((Player&)_sprite).runAction(flip);
+					((Obj&)_sprite).stopAllActions();
+					if (((Player&)_sprite).getnowkey() == key::KEY_LEFT_ARROW)
+					{
+						auto flip = FlipX::create(true);
+						((Player&)_sprite).runAction(flip);
+						//TRACE("現在のｷｰ = %d\n", ((Player&)_sprite).getnowkey());
+					}
+					if (((Player&)_sprite).getnowkey() == key::KEY_RIGHT_ARROW)
+					{
+						auto flip = FlipX::create(false);
+						((Player&)_sprite).runAction(flip);
+
+					}
+					_animation = _animcache->getAnimation(data.second.ActName);
 				}
-				_animation = _animcache->getAnimation(data.second.ActName);
 			}
 		}
 	}
 
 	if (((Player&)_sprite).GetAct() == ACT_ID::JUMPING)
 	{
-		((Obj&)_sprite).stopAllActions();
-		_animation = _animcache->getAnimation("jump");
+		if (_animation == _animcache->getAnimation("jump"))
+		{
+			return;
+		}
+		else
+		{
+			((Obj&)_sprite).stopAllActions();
+			_animation = _animcache->getAnimation("jump");
+		}
 	}
-	
 	((Player&)_sprite).runAction(RepeatForever::create(Animate::create(_animation)));
 }
 

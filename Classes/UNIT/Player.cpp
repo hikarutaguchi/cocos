@@ -84,8 +84,8 @@ bool Player::init()
 
 	//inputstate = new InputKey(this);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	inputstate = new InputKey(this);
-	//inputstate = new InputPad();
+	//inputstate = new InputKey(this);
+	inputstate = new InputPad();
 #else
 	inputstate = new InputPad();
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_
@@ -201,7 +201,8 @@ bool Player::init()
 		_actP->AddActionM("’âŽ~", data);
 	}
 
-	manager.reset(efk::EffectManager::create(Director::getInstance()->getOpenGLView()->getDesignResolutionSize()));
+	//manager.reset(efk::EffectManager::create(Director::getInstance()->getOpenGLView()->getDesignResolutionSize()));
+	
 	this->scheduleUpdate();
 
 	return true;
@@ -209,24 +210,25 @@ bool Player::init()
 
 void Player::update(float delta)
 {
-	inputstate->updata();
-	inputstate->Update(this);
+	inputstate->updata(this);
 	_actP->Updata();
-	(*manager).update();
+	lpEffectMng.Updata();
+	//(*manager).update();
 
 	if (getnowkey() == key::KEY_Z)
 	{
-
-		effect = efk::Effect::create("Laser01.efk", 13.0f);
+		//lpEffectMng.SetEffect("test", "Laser01.efk");
+		/*effect = efk::Effect::create("Laser01.efk", 13.0f);
 		emitter = efk::EffectEmitter::create(manager.get());
-		emitter->setEffect(effect);
+		emitter->setEffect(effect);*/
 
-		emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
-		emitter->setPosition(Vec2(120, 100));
-		this->addChild(emitter, 10);
-
-		emitter->play();
+		/*emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+		emitter->setPosition(Vec2(120, 100));*/
+		this->addChild(lpEffectMng.PlayEffect("test"));
+		//lpEffectMng.PlayEffect("test")->play();
 	}
+
+	
 	//SetAct();
 }
 

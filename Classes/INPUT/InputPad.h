@@ -5,7 +5,8 @@
 struct InputPad : public _state
 {
 public:
-	void Update(cocos2d::Node *sp);
+	//InputPad(cocos2d::Sprite * sp);
+	void updata(cocos2d::Node *sp);
 	//INPUT_TYPE getType() { return INPUT_TYPE::TOUCH; };		// 入力ﾀｲﾌﾟ
 	//DIR GetDirData() { return data; };						// 方向を取得
 	//cocos2d::Vec2 GetMove() { return move; };				// 移動量

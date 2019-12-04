@@ -24,6 +24,7 @@
 
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
+#include "EFFECT/EffectMng.h"
 
 
 USING_NS_CC;
@@ -108,17 +109,18 @@ bool GameScene::init()
 
 	//manager = efk::EffectManager::create(rsize);
 
-	manager.reset(efk::EffectManager::create(Director::getInstance()->getOpenGLView()->getDesignResolutionSize()));
+	//manager.reset(efk::EffectManager::create(Director::getInstance()->getOpenGLView()->getDesignResolutionSize()));
 
-	auto effect = efk::Effect::create("Laser01.efk");
-	auto emitter = efk::EffectEmitter::create(manager.get());
-	emitter->setEffect(effect);
-	emitter->setPlayOnEnter(true);
+	//auto effect = efk::Effect::create("Laser01.efk",5.0f);
+	//auto emitter = efk::EffectEmitter::create(manager.get());
+	//emitter->setEffect(effect);
+	//emitter->setPlayOnEnter(true);
 
-	emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
-	emitter->setPosition(Vec2(320, 150));
+	//emitter->setRotation3D(cocos2d::Vec3(0, 90, 0));
+	//emitter->setPosition(Vec2(320, 150));
 
-	emitter->setScale(10);
+	//emitter->setScale(10);
+
 
 
 	map->setName("MAP");
@@ -159,24 +161,28 @@ bool GameScene::init()
 	
 	bgLayer->addChild(map,1);
 
-	ChLayer->addChild(emitter, 10);
+	lpEffectMng.SetEffect("test", "Laser01.efk");
+
+	ChLayer->addChild(lpEffectMng.PlayEffect("test"),10);
+
+	//ChLayer->addChild(emitter, 10);
 
 	auto player = Player::createSprite();
 	player->setName("player");
 	ChLayer->addChild(player);
 
 	/* 再生 */
-#if CK_PLATFORM_ANDROID
-	// Androidでの初期化はAppActivity.javaにて行っている
-#else
-	CkConfig config;
-#endif
-	CkInit(&config);
-	//Bank sounds ファイルの再生
-	//CkBank* bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
-	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
-//	
-	_soundEffect = CkSound::newBankSound(_bank,1);
+//#if CK_PLATFORM_ANDROID
+//	// Androidでの初期化はAppActivity.javaにて行っている
+//#else
+//	CkConfig config;
+//#endif
+//	CkInit(&config);
+//	//Bank sounds ファイルの再生
+//	//CkBank* bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+//	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+////	
+//	_soundEffect = CkSound::newBankSound(_bank,1);
 //	_soundEffect = CkSound::newBankSound(_bank, "hiphoppiano");    // 別関数にてckbxで設定したindex番号でも呼び出し可能
 //	_soundEffect->play();
 
@@ -194,7 +200,8 @@ bool GameScene::init()
 
 void GameScene::update(float delta)
 {
-	(*manager).update();
+	lpEffectMng.Updata();
+	//(*manager).update();
 	//CkUpdate();    // Stream sounds再生を行うのに必須関数
 }
 
@@ -213,7 +220,7 @@ void GameScene::menuCloseCallback(Ref* pSender)
 
 void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
 {
-	manager->begin(renderer, _globalZOrder);
+	//manager->begin(renderer, _globalZOrder);
 	cocos2d::Scene::visit(renderer, parentTransform, parentFlags);
-	manager->end(renderer, _globalZOrder);
+	//manager->end(renderer, _globalZOrder);
 }
