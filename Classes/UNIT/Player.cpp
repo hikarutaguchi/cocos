@@ -84,8 +84,8 @@ bool Player::init()
 
 	//inputstate = new InputKey(this);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-	//inputstate = new InputKey(this);
-	inputstate = new InputPad();
+	inputstate = new InputKey(this);
+	//inputstate = new InputPad();
 #else
 	inputstate = new InputPad();
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_
@@ -215,7 +215,7 @@ void Player::update(float delta)
 	lpEffectMng.Updata();
 	//(*manager).update();
 
-	if (getnowkey() == key::KEY_Z)
+	if (getnowkey() == key::KEY_Z && getTiming() == INPUT_TIMING::ON_MOMENT)
 	{
 		//lpEffectMng.SetEffect("test", "Laser01.efk");
 		/*effect = efk::Effect::create("Laser01.efk", 13.0f);
