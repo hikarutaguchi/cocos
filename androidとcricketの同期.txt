@@ -1,0 +1,57 @@
+①　projectのプロパティc/c++で追加のインクルードディレクトリ
+(すべての構成)でjdk\12.0.2のincludeとinclude/win32までのパスを通す。
+
+②　ckcricketを使いたい.hで<jni.h>をインクルードして以下の文を追加。
+
+#ifndef __ANDROID_JNI__
+#define __ANDROID_JNI__
+#ifdef __cplusplus
+extern "C" {
+#endif
+	JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(JNIEnv * env,jclass activity ,jobject context);
+#ifdef __cplusplus
+}
+#endif
+#endif
+
+③　ckcricketを使いたい.cppで以下の文を追加。
+#if CK_PLATFORM_ANDROID
+#ifdef __cplusplus
+extern "C" {
+#endif
+JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(JNIEnv * env, jclass activity, jobject context)
+{
+	CkConfig config(env, context);
+	CkInit(&config);
+	CkBank * g_bank = CkBank::newBank("dsptouch.ckb");
+	CkSound * g_sound = CkSound::newBankSound(g_bank, "hiphoppiano");
+	g_sound->setLoopCount(-1);
+	g_sound->play();
+}
+#ifdef __cplusplus
+}
+#endif
+#endif
+
+---※その時win32上で動くようにしているコードは#ifdefで見えないようにしておく。
+
+④　android studioのAppActivity.javaの中で↓を定義する。
+
+private static native void initCricket(Context context);--- ※@Overrideの上で
+と
+AppActivity.initCricket(this.getApplicationContext());
+
+---※protected void onCreate(Bundle savedInstanceState)の中で
+
+⑤　android studioのCMakeLists.txtの中で↓を定義する。
+
+include(AndroidNdkModules)
+android_ndk_import_module_cpufeatures()
+
+include_directories(D:/cricket/cricket-1.6.7/inc)
+
+link_directories(D:/cricket/cricket-1.6.7/lib/android/ndk/${ANDROID_ABI}/debug)
+
+link_libraries(D:/cricket/cricket-1.6.7/lib/android/ndk/${ANDROID_ABI}/debug/libck.a)
+
+---※project(${APP_NAME})の下から　
