@@ -33,13 +33,25 @@
 #include "UNIT/Obj.h"
 #include "UNIT/Player.h"
 #include "Effekseer/Effekseer.h"
-//#include <ck/ck.h>
-//#include <ck/bank.h>
-//#include <ck/sound.h>
-//#include <ck/effect.h>
+#include <jni.h>
+#include <ck/ck.h>
+#include <ck/bank.h>
+#include <ck/sound.h>
+#include <ck/effect.h>
 //#include <ck/config.h>
 //#include <ck/effectparam.h>
 //#include <ck/effectbus.h>
+
+#ifndef __ANDROID_JNI__
+#define __ANDROID_JNI__
+#ifdef __cplusplus
+extern "C" {
+#endif
+	JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(JNIEnv * env, jclass activity, jobject context);
+#ifdef __cplusplus
+}
+#endif
+#endif
 
 
 class GameScene : public cocos2d::Scene
@@ -59,12 +71,15 @@ public:
 	//int count = 0;
     
     // implement the "static create()" method manually
-    CREATE_FUNC(GameScene);
+    //CREATE_FUNC(GameScene);
+	static GameScene* create();
+	GameScene();
+	~GameScene();
 private:
 
-	/*CkBank* _bank = nullptr;
+	CkBank* _bank = nullptr;
 	CkSound* _soundEffect = nullptr;
-	CkSound* _music = nullptr;*/
+	CkSound* _music = nullptr;
 
 	std::unique_ptr<efk::EffectManager> manager = nullptr;
 

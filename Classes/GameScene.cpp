@@ -29,6 +29,25 @@
 
 USING_NS_CC;
 
+#if CK_PLATFORM_ANDROID
+#ifdef __cplusplus
+extern "C" {
+#endif
+	JNIEXPORT void JNICALL Java_org_cocos2dx_cpp_AppActivity_initCricket(JNIEnv * env, jclass activity, jobject context)
+	{
+		CkConfig config(env, context);
+		CkInit(&config);
+		CkBank * g_bank = CkBank::newBank("dsptouch.ckb");
+		CkSound * g_sound = CkSound::newBankSound(g_bank, "hiphoppiano");
+		g_sound->setLoopCount(-1);
+		g_sound->play();
+	}
+#ifdef __cplusplus
+}
+#endif
+#endif
+
+
 enum class LAYER {
 	BG = 0,
 	CH = 10,
@@ -171,20 +190,26 @@ bool GameScene::init()
 	player->setName("player");
 	ChLayer->addChild(player);
 
-	/* 再生 */
-//#if CK_PLATFORM_ANDROID
-//	// Androidでの初期化はAppActivity.javaにて行っている
-//#else
-//	CkConfig config;
-//#endif
-//	CkInit(&config);
-//	//Bank sounds ファイルの再生
-//	//CkBank* bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
-//	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
-////	
-//	_soundEffect = CkSound::newBankSound(_bank,1);
-//	_soundEffect = CkSound::newBankSound(_bank, "hiphoppiano");    // 別関数にてckbxで設定したindex番号でも呼び出し可能
-//	_soundEffect->play();
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	CkConfig config;
+	CkInit(&config);
+	//Bank sounds ファイルの再生
+	//CkBank* bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+	_bank = CkBank::newBank("dsptouch.ckb", kCkPathType_FileSystem);
+	//	
+	_soundEffect = CkSound::newBankSound(_bank, 1);
+	_soundEffect = CkSound::newBankSound(_bank, "hiphoppiano");    // 別関数にてckbxで設定したindex番号でも呼び出し可能
+	_soundEffect->play();
+#else
+
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_
+
+
+
+
+
+
 
 
 
@@ -216,6 +241,34 @@ void GameScene::menuCloseCallback(Ref* pSender)
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
+}
+
+GameScene * GameScene::create()
+{
+	auto gameScene = new GameScene();
+
+	if (gameScene->init())
+	{
+		gameScene->autorelease();
+		return gameScene;
+	}
+	else
+	{
+		delete gameScene;
+		return nullptr;
+	}
+}
+
+GameScene::GameScene()
+{
+}
+
+GameScene::~GameScene()
+{
+	_bank->destroy();
+	_soundEffect->destroy();
+
+	CkShutdown();
 }
 
 void GameScene::visit(cocos2d::Renderer * renderer, const cocos2d::Mat4 & parentTransform, uint32_t parentFlags)
